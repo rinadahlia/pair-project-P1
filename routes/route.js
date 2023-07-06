@@ -32,6 +32,8 @@ route.post('/home', UserController.postHome)
 route.get('/home/profile', UserController.showFormAddProfile)
 route.post('/home/profile', UserController.postFormAddProfile)
 
+route.get('/home/edit', UserController.showFormAddEdit)
+route.post('/home/edit', UserController.postFormAddEdit)
 
 // route.get('/home/delete', UserController.delete)
 

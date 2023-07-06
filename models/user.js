@@ -15,11 +15,66 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    dateOfBirth: DataTypes.DATE,
-    address: DataTypes.STRING,
-    bio: DataTypes.TEXT
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You you must fill the First Name!'
+        },
+        notEmpty: {
+          msg: 'You you must fill the First Name!'
+        }
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You you must fill the Last Name!'
+        },
+        notEmpty: {
+          msg: 'You you must fill the Last Name!'
+        }
+      }
+    },
+    dateOfBirth: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You you must fill the First Name!'
+        },
+        notEmpty: {
+          msg: 'You you must fill the First Name!'
+        }
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You you must fill the First Name!'
+        },
+        notEmpty: {
+          msg: 'You you must fill the First Name!'
+        }
+      }
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You you must fill the First Name!'
+        },
+        notEmpty: {
+          msg: 'You you must fill the First Name!'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',

@@ -33,74 +33,103 @@ class UserController {
         }
     }
 
-    static showFormLogin(req, res){
+    static showFormLogin(req, res) {
         res.render('form-login')
     }
 
-    static postFormLogin(req, res){
-        const {username, password} = req.body
+    static postFormLogin(req, res) {
+        const { username, password } = req.body
         let dataAccount
         Account.findOne({
             where: {
                 username
             }
         })
-        .then((data) => {
-            if(!data){
-                res.redirect('/login?msg=username and password wrong!')
-            }
-            dataAccount = data
-            return bcrypt.compare(password, data.password)
-        })
-        .then((validPassword) => {
-            if(!validPassword){
-                res.redirect('/login?msg=username and password wrong!')
-            }
-            req.session.accountId = dataAccount.id
-            res.redirect('/home')
-        })
-        
+            .then((data) => {
+                if (!data) {
+                    res.redirect('/login?msg=username and password wrong!')
+                }
+                dataAccount = data
+                return bcrypt.compare(password, data.password)
+            })
+            .then((validPassword) => {
+                if (!validPassword) {
+                    res.redirect('/login?msg=username and password wrong!')
+                }
+                req.session.accountId = dataAccount.id
+                res.redirect('/home')
+            })
+
     }
 
-    static home(req, res){
-        if(req.session.accountId){
-        Post.findAll({
-            include: Account
-        })
-        .then((data) => {
-            // res.send(data)
-            res.render('home', {data})
-        })
-        .catch((err) => {
-            res.send(err)
-        })
+    static home(req, res) {
+        if (req.session.accountId) {
+            Post.findAll({
+                include: Account
+            })
+                .then((data) => {
+                    res.render('home', { data })
+                })
+                .catch((err) => {
+                    res.send(err)
+                })
         }
     }
 
-    static postHome(req, res){
-        const {content} = req.body
-        Post.create({content})
+    static postHome(req, res) {
+        const { content } = req.body
+        Post.create({ content })
+            .then((data) => {
+                res.redirect('/home')
+            })
+            .catch((err) => {
+                res.send(err)
+            })
+    }
+
+    static showFormAddProfile(req, res) {
+        res.render('form-profile')
+    }
+
+    static postFormAddProfile(req, res) {
+        const { firstName, lastName, dateOfBirth, address, bio } = req.body
+        // console.log(firstName, lastName, dateOfBirth, address, bio)
+        User.create({ firstName, lastName, dateOfBirth, address, bio })
+            .then((data) => {
+                res.redirect('/home/profile')
+            })
+            .catch((err) => {
+                res.send(err)
+            })
+    }
+
+    static showFormAddEdit(req, res) {
+        User.findAll({})
         .then((data) => {
-            res.redirect('/home')
+            // const date = new Date(data.dataValues.dateOfBirth);
+            // const year = date.getFullYear();
+            // const month = ('0' + (date.getMonth() + 1)).slice(-2);
+            // const day = ('0' + date.getDate()).slice(-2);
+            // data.dataValues.ISODate = `${year}-${month}-${day}`;
+            // res.render('edit-profile', { data: data.dataValues })
+
+            res.render('edit-profile', {data})
         })
         .catch((err) => {
             res.send(err)
         })
     }
 
-    static showFormAddProfile(req, res){
-        res.render('form-profile')
-    }
-
-    static postFormAddProfile(req, res){
-        const {firstName, lastName, dateOfBirth, address, bio} = req.body
-        User.create({ firstName, lastName, dateOfBirth, address, bio })
-        .then((data) => {
-            res.redirect('/home/profile')
-        })
-        .catch((err) => {
-            res.send(err )
-        })
+    static postFormAddEdit() {
+        const { firstName, lastName, dateOfBirth, address, bio } = req.body
+        // console.log(firstName, lastName, dateOfBirth, address, bio)
+        User.update({ firstName, lastName, dateOfBirth, address, bio })
+            .then((data) => {
+                res.redirect('/home/edit')
+            })
+            .catch((err) => {
+                res.send(err)
+            })
     }
 
     // static postPhoto(req, res){
@@ -109,7 +138,7 @@ class UserController {
     //     console.log(req.file)
     // }
 
-    static logout(req, res){
+    static logout(req, res) {
         req.session.destroy()
         res.redirect('/login')
     }
