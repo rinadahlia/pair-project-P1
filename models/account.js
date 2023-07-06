@@ -18,13 +18,46 @@ module.exports = (sequelize, DataTypes) => {
   Account.init({
     username: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You have to fill the Username!'
+        },
+        notEmpty: {
+          msg: 'You have to fill the Username!'
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You have to fill the E-mail!'
+        },
+        notEmpty: {
+          msg: 'You have to fill the E-mail!'
+        }
+      }
     },
-    password: DataTypes.STRING,
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'You have to fill the Password!'
+        },
+        notEmpty: {
+          msg: 'You have to fill the Password!'
+        },
+        len: {
+          args: [8, 13],
+          msg: 'Length password is between 8 - 12 characters!'
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,

@@ -59,6 +59,9 @@ class UserController {
                 req.session.accountId = dataAccount.id
                 res.redirect('/home')
             })
+            .catch((err) => {
+                res.send(err)
+            })
 
     }
 

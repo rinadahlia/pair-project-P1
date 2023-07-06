@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'cuitter',
     resave: false,
     saveUninitialized: false,
     cookie: { 

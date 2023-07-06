@@ -17,14 +17,14 @@ route.get('/login', UserController.showFormLogin)
 route.post('/login', UserController.postFormLogin)
 
 
-route.use(function(req, res, next){
-    console.log(req.session)
-    if(!req.session.accountId){
-        res.redirect('/login?msg=Access denied! Login first.')
-    } else {
-        next()
-    }
-})
+// route.use(function(req, res, next){
+//     console.log(req.session)
+//     if(!req.session.accountId){
+//         res.redirect('/login?msg=Access denied! Login first.')
+//     } else {
+//         next()
+//     }
+// })
 
 route.get('/home', UserController.home)
 route.post('/home', UserController.postHome)
