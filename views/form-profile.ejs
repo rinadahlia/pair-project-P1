@@ -1,35 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('layout/header') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <div class="container-fluid mt-3">
+    <h1>My Profile</h1>
 
-<body>
-    <h1>Create Profile</h1>
+    <% if (errors) { %>
+        <% errors.split(',').forEach(err=> { %>
+            <h6 style="color: red;">
+                <%= err %>
+            </h6>
+        <% }) %>
+    <% } %>
 
-    <form action="/home/profile" method="post">
-        <label for="firstName">First Name </label><br>
-        <input type="text" id="firstName" name="firstName">
-        <br><br>
-        <label for="lastName">Last Name </label><br>
-        <input type="text" id="lastName" name="lastName">
-        <br><br>
-        <label for="dateOfBirth">Date of Birth </label><br>
-        <input type="date" id="dateOfBirth" name="dateOfBirth">
-        <br><br>
-        <label for="address">Address </label><br>
-        <input type="text" id="address" name="address">
-        <br><br>
-        <label for="bio">Bio </label><br>
-        <textarea name="bio" id="" cols="30" rows="10"></textarea>
-        <br><br>
-        <a href="/"><button>Create new Profile</button></a>
-    </form>
+    <div class="col-lg-4 mt-4">
+        <form action="/home/<%= data.id %>/profile" method="post">
+            <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" name="firstName">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="lastName">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" name="dateOfBirth">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" name="address">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Bio</label>
+                <textarea class="form-control" name="bio" id="" cols="30" rows="10"></textarea>
+            </div>           
+            <button type="submit" class="btn btn-primary">Create New Profile</button>
+        </form>
+    </div>
+    </div>
 
-</body>
-
-</html>
+<%- include('layout/footer') %>

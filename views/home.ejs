@@ -1,37 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('layout/header') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-2">Hi!, <%= dataUserAndAccount.Account.username %></h1>
+      </div>
+      <div class="col text-center">
+        <h1 class="mt-2">CUITTER</h1>
+      </div>
+      <div class="col text-end">
+          <a href="/home/<%= dataUserAndAccount.Account.id %>/edit" class="btn btn-sm btn-primary mt-2">Profile</a>
+          <a href="/logout" class="btn btn-sm btn-secondary mt-2">Logout</a>
+      </div>
+    </div>
+  </div>
 
-<body>
-    <h1>masuk home</h1>
-    <a href="/logout"><button>logout</button></a>
-    <a href="/home/profile"><button>Create New Profile</button></a>
-    <a href="/home/edit"><button>Edit My Profile</button></a>
-
-    <div style="text-align: center;">
-        <form action="/home" method="POST" style="text-align: center;">
-            <textarea name="content" id="" cols="50" rows="10" placeholder="How's your day?"></textarea>
+    <div class="container-fluid mt-2">
+        <form action="/home/<%= dataUserAndAccount.Account.id %>" method="POST" style="text-align: center;">
+            <div class="form-floating">
+                <textarea name="content" class="form-control" placeholder="How's your day?" style="height: 100px; width: 50ox;" required></textarea>
+                <label for="floatingTextarea2"><strong>Post a something!</strong></label>
+              </div>
             <br>
-            <a href="/home" ><button type="submit">Post</button></a>
+            <button class="btn btn-lg btn-success" type="submit">Post it!</button>
         </form>
-    
+
         <div>
-            <% data.forEach(el => { %>
-             <p><%= el.content %></p>
-             <p><%= el.createdAt %></p>
-             <div>
-                <a href=""><button>delete</button></a>
-             </div>
-            <% }) %>
+            <br><br>
+            <a class="btn btn-sm btn-secondary" href="/home/<%= dataUserAndAccount.Account.id %>?sort=ASC">ASC</a> <a class="btn btn-sm btn-secondary" href="/home/<%= dataUserAndAccount.Account.id %>?sort=DESC">DESC</a>
+            <br><br>
+            <% dataPosts?.forEach(el=> { %>
+
+                <div class="card">
+                    <div class="card-body">
+                      <h6 class="card-subtitle mb-2 text-body-secondary"><strong><%= el.Account.User.firstName %> <%= el.Account.User.lastName %></strong></h6>
+                      <p class="card-text"><%= el.content %></p>
+                      <p class="card-text">
+                          <%= el.createdAt %> | by <%= el.Account.username %>
+                      </p>
+                     <% if ( dataUserAndAccount.Account.id === el.AccountId) { %>
+                      <a class="btn btn-sm btn-secondary" href="/home/<%= dataUserAndAccount.Account.id %>/delete/<%= el.id %>">delete</a>
+                    <% } %>
+                    </div>
+                  </div>
+                  <br>
+                <% }) %>
         </div>
     </div>
 
-</body>
-
-</html>
+<%- include('layout/footer') %>

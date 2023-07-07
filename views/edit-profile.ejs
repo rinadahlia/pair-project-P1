@@ -1,37 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('layout/header') %>
+    <div class="container-fluid mt-3">
+        <h1>Edit my Profile</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Edit my Profile</h1>
-
-    <form action="/home/profile" method="post">
-        <% data.forEach(el=> { %>
-            <label for="firstName">First Name </label><br>
-            <input type="text" id="firstName" name="firstName" value="<%= el.firstName %>">
-            <br><br>
-            <label for="lastName">Last Name </label><br>
-            <input type="text" id="lastName" name="lastName" value="<%= el.lastName %>">
-            <br><br>
-            <label for="dateOfBirth">Date of Birth </label><br>
-            <input type="date" id="dateOfBirth" name="dateOfBirth" value="<%= el.dateOfBirth %>">
-            <br><br>
-            <label for="address">Address </label><br>
-            <input type="text" id="address" name="address" name="address" value="<%= el.address %>">
-            <br><br>
-            <label for="bio">Bio </label><br>
-            <textarea name="bio" id="" cols="30" rows="10"><%= el.bio %></textarea>
-            <br><br>
+        <% if (errors) { %>
+            <% errors.split(',').forEach(err=> { %>
+                <h6 style="color: red;">
+                    <%= err %>
+                </h6>
             <% }) %>
-                <a href="/"><button>Create new Profile</button></a>
-    </form>
+        <% } %>
 
-</body>
+        <div class="col-lg-4 mt-4">
+            <form action="/home/<%= data.AccountId %>/edit" method="post">
+                <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" name="firstName" value="<%= data.firstName %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" value="<%= data.lastName %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" name="dateOfBirth" value="<%= data.dateOfBirth %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control" name="address" value="<%= data.address %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-control" name="bio" id="" cols="30" rows="10"><%= data.bio %></textarea>
+                </div>           
+                <button type="submit" class="btn btn-primary">Edit Profile</button>
+                <a href="/home/<%= data.AccountId %>" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
 
-</html>
+<%- include('layout/footer') %>

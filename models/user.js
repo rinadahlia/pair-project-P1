@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,73 +9,85 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Account)
+      User.belongsTo(models.Account);
+    }
+
+    // Getter untuk mendapatkan dateOfBirth dalam format ISO (YYYY-MM-DD)
+    get ISODate() {
+      const dateObj = new Date(this.dateOfBirth);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
   }
-  User.init({
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'You you must fill the First Name!'
+  User.init(
+    {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "You you must fill the First Name!",
+          },
+          notEmpty: {
+            msg: "You you must fill the First Name!",
+          },
         },
-        notEmpty: {
-          msg: 'You you must fill the First Name!'
-        }
-      }
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'You you must fill the Last Name!'
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "You you must fill the Last Name!",
+          },
+          notEmpty: {
+            msg: "You you must fill the Last Name!",
+          },
         },
-        notEmpty: {
-          msg: 'You you must fill the Last Name!'
-        }
-      }
-    },
-    dateOfBirth: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'You you must fill the First Name!'
+      },
+      dateOfBirth: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "You you must fill the Date of birth!",
+          },
+          notEmpty: {
+            msg: "You you must fill the Date of birth!",
+          },
         },
-        notEmpty: {
-          msg: 'You you must fill the First Name!'
-        }
-      }
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'You you must fill the First Name!'
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "You you must fill the address!",
+          },
+          notEmpty: {
+            msg: "You you must fill the address!",
+          },
         },
-        notEmpty: {
-          msg: 'You you must fill the First Name!'
-        }
-      }
-    },
-    bio: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'You you must fill the First Name!'
+      },
+      bio: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "You you must fill the bio!",
+          },
+          notEmpty: {
+            msg: "You you must fill the bio!",
+          },
         },
-        notEmpty: {
-          msg: 'You you must fill the First Name!'
-        }
-      }
+      },
     },
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
   return User;
 };
