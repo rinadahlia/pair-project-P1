@@ -13,7 +13,7 @@ const isLogin = (req, res, next) => {
     next();
   }
 };
-
+ 
 // landing page
 route.get("/", UserController.landingPage);
 
