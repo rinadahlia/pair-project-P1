@@ -283,7 +283,7 @@ class UserController {
   //     console.log(req.body)
   //     console.log(req.file)
   // }
-
+  
   static deleteById(req, res) {
     const { AccountId, PostId } = req.params;
     Post.destroy({
